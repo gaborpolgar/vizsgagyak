@@ -28,4 +28,10 @@ public class PlayerController {
         return playerService.createPlayer(command);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePlayerById(@PathVariable("id") Long id){
+        playerService.deletePlayerById(id);
+    }
+
 }

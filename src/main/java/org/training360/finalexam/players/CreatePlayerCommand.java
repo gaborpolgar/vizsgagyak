@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CreatePlayerCommand {
 
+    @NotBlank
     private String name;
 
     private LocalDate dateOfBirth;

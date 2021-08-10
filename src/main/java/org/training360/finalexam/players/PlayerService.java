@@ -2,16 +2,16 @@ package org.training360.finalexam.players;
 
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public PlayerService(PlayerRepository playerRepository, ModelMapper modelMapper) {
         this.playerRepository = playerRepository;
@@ -19,10 +19,9 @@ public class PlayerService {
     }
 
     public List<PlayerDTO> listPlayers() {
-        return playerRepository.findAll()
-                .stream()
-                .map(t -> modelMapper.map(t, PlayerDTO.class))
-                .collect(Collectors.toList());
+        java.lang.reflect.Type targetListType = new TypeToken<List<PlayerDTO>>() {
+        }.getType();
+        return modelMapper.map(playerRepository.findAll(), targetListType);
     }
 
     public PlayerDTO createPlayer(CreatePlayerCommand command) {
@@ -31,4 +30,7 @@ public class PlayerService {
         return modelMapper.map(player, PlayerDTO.class);
     }
 
+    public void deletePlayerById(Long id) {
+        playerRepository.deleteById(id);
+    }
 }
